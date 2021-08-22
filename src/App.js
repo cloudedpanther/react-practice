@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/Header";
+import Navigation from "./components/Navigation";
+import Article from "./components/Article";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    Header: { title: "WEB", sub: "World Wide Web!" },
+    contents: [
+      { id: 1, title: "HTML", desc: "HTML is a hypertext markup language." },
+      { id: 2, title: "CSS", desc: "CSS is for design." },
+      { id: 3, title: "JavaScript", desc: "JavaScript is for interactive." },
+    ],
+  };
+  render() {
+    const {
+      Header: { title, sub },
+      contents,
+    } = this.state;
+    return (
+      <div>
+        <Header title={title} sub={sub} />
+        <Navigation data={contents} />
+        <Article />
+      </div>
+    );
+  }
 }
 
 export default App;
