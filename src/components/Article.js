@@ -2,10 +2,11 @@ import React from "react";
 
 class Article extends React.Component {
   render() {
+    const { title, desc } = this.props;
     return (
       <article>
-        <h2>HTML</h2>
-        <p>HTML is a hypertext markup language.</p>
+        <h2>{title}</h2>
+        <p>{desc}</p>
       </article>
     );
   }

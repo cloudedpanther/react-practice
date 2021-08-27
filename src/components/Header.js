@@ -5,7 +5,15 @@ class Header extends React.Component {
     const { title, sub } = this.props;
     return (
       <header>
-        <h1>{title}</h1>
+        <h1>
+          <a
+            href="/"
+            onClick={function (event) {
+              event.preventDefault();
+            }}>
+            {title}
+          </a>
+        </h1>
         <p>{sub}</p>
       </header>
     );
