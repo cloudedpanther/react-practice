@@ -2,7 +2,7 @@ import React from "react";
 
 class Header extends React.Component {
   render() {
-    const { title, sub } = this.props;
+    const { title, sub, onChangeToWelcomePage } = this.props;
     return (
       <header>
         <h1>
@@ -10,6 +10,7 @@ class Header extends React.Component {
             href="/"
             onClick={function (event) {
               event.preventDefault();
+              onChangeToWelcomePage();
             }}>
             {title}
           </a>

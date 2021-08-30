@@ -2,10 +2,17 @@ import React from "react";
 
 class NavigationList extends React.Component {
   render() {
-    const { id, title } = this.props;
+    const { id, title, onChangePage } = this.props;
     return (
       <li>
-        <a href={"/contents/" + id}>{title}</a>
+        <a
+          href={"/contents/" + id}
+          onClick={function (event) {
+            event.preventDefault();
+            onChangePage(id);
+          }}>
+          {title}
+        </a>
       </li>
     );
   }

@@ -5,7 +5,8 @@ import Article from "./components/Article";
 
 class App extends React.Component {
   state = {
-    mode: "welcome",
+    mode: "read",
+    selectedContent_id: 1,
     Header: { title: "WEB", sub: "World Wide Web!" },
     welcome: { title: "Welcome", desc: "Hello, React!!" },
     contents: [
@@ -17,6 +18,7 @@ class App extends React.Component {
   render() {
     const {
       mode,
+      selectedContent_id,
       Header: { title, sub },
       contents,
     } = this.state;
@@ -28,13 +30,29 @@ class App extends React.Component {
       articleTitle = welcomeTitle;
       articleDesc = welcomeDesc;
     } else if (mode === "read") {
-      articleTitle = contents[0].title;
-      articleDesc = contents[0].desc;
+      for (let i = 0; i < contents.length; i++) {
+        if (contents[i].id === selectedContent_id) {
+          articleTitle = contents[i].title;
+          articleDesc = contents[i].desc;
+          break;
+        }
+      }
     }
     return (
       <div>
-        <Header title={title} sub={sub} />
-        <Navigation data={contents} />
+        <Header
+          title={title}
+          sub={sub}
+          onChangeToWelcomePage={function () {
+            this.setState({ mode: "welcome" });
+          }.bind(this)}
+        />
+        <Navigation
+          data={contents}
+          onChangePage={function (id) {
+            this.setState({ mode: "read", selectedContent_id: id });
+          }.bind(this)}
+        />
         <Article title={articleTitle} desc={articleDesc} />
       </div>
     );

@@ -3,7 +3,7 @@ import NavigationList from "./NavigationList";
 
 class Navigation extends React.Component {
   render() {
-    const { data } = this.props;
+    const { data, onChangePage } = this.props;
     return (
       <nav>
         <ul>
@@ -12,6 +12,7 @@ class Navigation extends React.Component {
               key={content.id}
               id={content.id}
               title={content.title}
+              onChangePage={onChangePage}
             />
           ))}
         </ul>
