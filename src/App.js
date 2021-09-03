@@ -35,8 +35,8 @@ class App extends React.Component {
     if (mode === "welcome") {
       _article = <Article title={welcomeTitle} desc={welcomeDesc} />;
     } else if (mode === "read") {
-      const data = this.getReadContent();
-      _article = <Article title={data.title} desc={data.desc} />;
+      const _content = this.getReadContent();
+      _article = <Article title={_content.title} desc={_content.desc} />;
     } else if (mode === "create") {
       _article = (
         <CreateContent
@@ -55,20 +55,23 @@ class App extends React.Component {
         />
       );
     } else if (mode === "update") {
+      const _content = this.getReadContent();
       _article = (
         <UpdateContent
-          onCreate={(_title, _desc) => {
-            this.max_content_id++;
-            const newContent = {
-              id: this.max_content_id,
-              title: _title,
-              desc: _desc,
-            };
-            const _content = contents.concat(newContent);
+          data={_content}
+          onUpdate={function (id, title, desc) {
+            let contents = Array.from(this.state.contents);
+            for (let i = 0; contents.length; i++) {
+              if (contents[i].id === id) {
+                contents[i].title = title;
+                contents[i].desc = desc;
+                break;
+              }
+            }
             this.setState({
-              contents: _content,
+              contents,
             });
-          }}
+          }.bind(this)}
         />
       );
     }
@@ -78,6 +81,7 @@ class App extends React.Component {
     const {
       Header: { title, sub },
       contents,
+      selectedContent_id,
     } = this.state;
     return (
       <div>
@@ -90,7 +94,22 @@ class App extends React.Component {
         />
         <Control
           onChangeMode={(mode) => {
-            this.setState({ mode });
+            if (mode === "delete") {
+              if (
+                window.confirm("Are you sure you want to delete this file?")
+              ) {
+                let contents = Array.from(this.state.contents);
+                for (let i = 0; i < contents.length; i++) {
+                  if (contents[i].id === selectedContent_id) {
+                    contents.splice(i, 1);
+                    break;
+                  }
+                }
+                this.setState({ mode: "welcome", contents });
+              }
+            } else {
+              this.setState({ mode });
+            }
           }}
         />
         <Navigation
